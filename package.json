@@ -1,0 +1,23 @@
+{
+  "name": "ocode-bwrap-sandbox",
+  "version": "1.0.0",
+  "description": "A bubblewrap sandbox for OpenCode so bash commands can be run safely without supervision.",
+  "homepage": "https://github.com/bachsofttrick/ocode-bwrap-sandbox#readme",
+  "bugs": {
+    "url": "https://github.com/bachsofttrick/ocode-bwrap-sandbox/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bachsofttrick/ocode-bwrap-sandbox.git"
+  },
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "@opencode-ai/plugin": "^1.18.32"
+  }
+}

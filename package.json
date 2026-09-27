@@ -14,8 +14,17 @@
   "author": "bachsofttrick",
   "type": "module",
   "main": "dist/index.js",
+  "exports": {
+    ".": "./dist/index.js",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
   "scripts": {
-    "build": "tsc"
+    "prepare": "tsc"
   },
   "dependencies": {
     "@opencode-ai/plugin": "^1.18.32"

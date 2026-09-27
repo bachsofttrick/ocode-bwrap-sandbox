@@ -107,3 +107,5 @@ export const BwrapSandbox: Plugin = async ({ client, directory, worktree, $ }, o
     },
   }
 }
+
+export default BwrapSandbox

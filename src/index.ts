@@ -19,7 +19,7 @@ type Options = {
 
 const shellQuote = (value: string) => `'${value.replaceAll("'", `'\\''`)}'`
 
-export const BwrapSandbox: Plugin = async ({ client, directory, worktree, $ }, options: Options = {}) => {
+const BwrapSandbox: Plugin = async ({ client, directory, worktree, $ }, options: Options = {}) => {
   const agents = options.agents ?? DEFAULT_AGENTS
   const writable = [...(options.writable ?? DEFAULT_WRITABLE)]
 
@@ -108,4 +108,4 @@ export const BwrapSandbox: Plugin = async ({ client, directory, worktree, $ }, o
   }
 }
 
-export default BwrapSandbox
+export default BwrapSandbox;

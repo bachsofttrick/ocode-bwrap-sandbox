@@ -1,7 +1,7 @@
 const DEFAULT_AGENTS = ["auto"];
 const DEFAULT_WRITABLE = ["/tmp/opencode"];
 const shellQuote = (value) => `'${value.replaceAll("'", `'\\''`)}'`;
-export const BwrapSandbox = async ({ client, directory, worktree, $ }, options = {}) => {
+const BwrapSandbox = async ({ client, directory, worktree, $ }, options = {}) => {
     const agents = options.agents ?? DEFAULT_AGENTS;
     const writable = [...(options.writable ?? DEFAULT_WRITABLE)];
     let bwrapAvailable = true;

@@ -1,5 +1,5 @@
 import type { Plugin } from "@opencode-ai/plugin"
-const DEFAULT_AGENTS = ["auto"]
+const DEFAULT_AGENTS = ["auto", "general", "mid-agent"]
 const DEFAULT_WRITABLE = ["/tmp/opencode"]
 
 // Sandboxes the bash tool with bwrap (bubblewrap) so commands can only
@@ -18,6 +18,26 @@ type Options = {
 }
 
 const shellQuote = (value: string) => `'${value.replaceAll("'", `'\\''`)}'`
+
+const WRAP_MARKER = " -- bash -c "
+
+// Reverses shellQuote for a single-quoted shell argument. Returns null when the
+// value is not a single-quoted argument, so callers can fall back to the input.
+const shellUnquote = (value: string): string | null => {
+  if (value.length < 2 || !value.startsWith("'") || !value.endsWith("'")) return null
+  return value.slice(1, -1).replaceAll(`'\\''`, "'")
+}
+
+// Recover the direct command from a string already wrapped as
+// `<bwrap args> -- bash -c <quoted command>`. Returns null when the string is
+// not such a wrapper, so re-wrapping does not nest sandboxes.
+const unwrapBwrap = (command: string): string | null => {
+  const markerIndex = command.indexOf(WRAP_MARKER)
+  if (markerIndex === -1) return null
+  const prefix = command.slice(0, markerIndex)
+  if (!prefix.includes("bwrap")) return null
+  return shellUnquote(command.slice(markerIndex + WRAP_MARKER.length).trim())
+}
 
 const BwrapSandbox: Plugin = async ({ client, directory, worktree, $ }, options: Options = {}) => {
   const agents = options.agents ?? DEFAULT_AGENTS
@@ -103,7 +123,8 @@ const BwrapSandbox: Plugin = async ({ client, directory, worktree, $ }, options:
         )
       }
 
-      output.args.command = `${buildPrefix()} -- bash -c ${shellQuote(command)}`
+      const direct = unwrapBwrap(command) ?? command
+      output.args.command = `${buildPrefix()} -- bash -c ${shellQuote(direct)}`
     },
   }
 }

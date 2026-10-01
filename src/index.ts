@@ -1,5 +1,5 @@
 import type { Plugin } from "@opencode-ai/plugin"
-const DEFAULT_AGENTS = ["auto", "general", "mid-agent"]
+const DEFAULT_AGENTS = ["auto"]
 const DEFAULT_WRITABLE = ["/tmp/opencode"]
 
 // Sandboxes the bash tool with bwrap (bubblewrap) so commands can only
